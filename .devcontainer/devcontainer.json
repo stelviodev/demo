@@ -1,0 +1,40 @@
+{
+	"name": "Stelvio.dev Demo",
+	"build": {
+		"dockerfile": "./Dockerfile",
+		"context": "..",
+		"cacheFrom": "type=registry,ref=ghcr.io/stelviodev/stelviodemocontainer:latest"
+	},
+	"features": {
+		// these features are included in the stelviodevcontainer base image:
+		// re-enable them if switching to a different (smaller) base image
+		// "ghcr.io/devcontainers/features/aws-cli:1": {},
+		// "ghcr.io/devcontainers/features/github-cli:1": {},
+		// "ghcr.io/devcontainer-community/devcontainer-features/astral.sh-uv:1": { "version": "0.9.7", "shellautocompletion": "true" },
+		// gum is needed for the interactive-setup script
+		"ghcr.io/devcontainer-community/devcontainer-features/charmbracelet-gum:1": { "version": "0.17.0" }
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.python"
+			],
+			"settings": {
+				"terminal.integrated.automationProfile.linux": null,
+				// Force a dark theme when Codespaces / the container opens
+				"workbench.colorTheme": "Default Dark+",
+				// Disable auto-detection so the chosen theme stays dark
+				"window.autoDetectColorScheme": false
+			}
+		}
+	},
+	// "postCreateCommand": ".devcontainer/setup",
+    "postAttachCommand": ".devcontainer/interactive-setup",
+	"containerEnv": {
+		"UV_LINK_MODE": "copy",
+		"UV_VENV_CLEAR": "0"
+	},
+	"remoteEnv": {
+		"STLV_DEBUG": "0"
+	}
+}
