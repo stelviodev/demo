@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euo pipefail
+# set -euo pipefail
 
 readonly TEMPLATES=("base")
 aws_ok=0
@@ -81,10 +81,13 @@ stelvio_art() {
 
 
 check_aws_auth() {
-    set +e
+    # Load env config to get credentials if available
+    source /workspaces/demo/.devcontainer/env-config.sh
+    
+    # set +e
     aws sts get-caller-identity > /dev/null 2>&1
     aws_sts_return_code=$?
-    set -e
+    # set -e
     if [ $aws_sts_return_code -eq 0 ]; then
         aws_ok=1
     else
@@ -101,20 +104,26 @@ check_stlv_app() {
 }
 
 prompt_aws() {
-        echo -e "\nPlease provide your AWS credentials to configure the AWS CLI.\n"
-        echo -e "Visit $(gum style --foreground 45 'https://console.aws.amazon.com/iam/home?#/security_credentials') to get your Access Key, and Secret"
-        echo -e "\n"
-        echo -e "AWS Access Key ID"
-        AWS_ACCESS_KEY_ID=$(gum input --placeholder "AWS_ACCESS_KEY_ID")
-        echo -e "\nAWS Secret Access Key"
-        AWS_SECRET_ACCESS_KEY=$(gum input --placeholder "AWS_SECRET_ACCESS_KEY")
-        echo -e "\nDefault AWS Region (e.g., us-east-1)"
-        AWS_DEFAULT_REGION=$(gum input --placeholder "What is your Default Region?" --value "us-east-1")
-        gum spin --title "Configuring AWS CLI with provided credentials..." -- sleep 0.5
-        aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID"
-        aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY"
-        export AWS_ACCESS_KEY_ID
-        export AWS_SECRET_ACCESS_KEY
+        aws login --remote
+
+
+
+        # export AWS_ACCESS_KEY_ID=$(aws configure get aws_access_key_id)
+        # export AWS_SECRET_ACCESS_KEY=$(aws configure get aws_secret_access_key)
+        # echo -e "\nPlease provide your AWS credentials to configure the AWS CLI.\n"
+        # echo -e "Visit $(gum style --foreground 45 'https://console.aws.amazon.com/iam/home?#/security_credentials') to get your Access Key, and Secret"
+        # echo -e "\n"
+        # echo -e "AWS Access Key ID"
+        # AWS_ACCESS_KEY_ID=$(gum input --placeholder "AWS_ACCESS_KEY_ID")
+        # echo -e "\nAWS Secret Access Key"
+        # AWS_SECRET_ACCESS_KEY=$(gum input --placeholder "AWS_SECRET_ACCESS_KEY")
+        # echo -e "\nDefault AWS Region (e.g., us-east-1)"
+        # AWS_DEFAULT_REGION=$(gum input --placeholder "What is your Default Region?" --value "us-east-1")
+        # gum spin --title "Configuring AWS CLI with provided credentials..." -- sleep 0.5
+        # aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID"
+        # aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY"
+        # export AWS_ACCESS_KEY_ID
+        # export AWS_SECRET_ACCESS_KEY
 }
 
 configure_aws() {
@@ -191,6 +200,12 @@ configure_stelvio() {
 }
 
 main() {
+    if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+        echo -e "\n$(gum style --foreground 196 "Warning:") This script should be sourced to configure the environment correctly."
+        echo -e "Usage: source ${0}\n"
+        sleep 2
+    fi
+
     stelvio_art
     sleep 0.5
     clear
@@ -211,14 +226,20 @@ main() {
     fi
 
     if [ $aws_ok -eq 1 ] && [ $stlv_ok -eq 1 ]; then
+        # Ensure env-config is sourced in bashrc for future sessions
+        if ! grep -q "env-config.sh" ~/.bashrc; then
+            echo "source /workspaces/demo/.devcontainer/env-config.sh" >> ~/.bashrc
+        fi
+
+        source /workspaces/demo/.devcontainer/env-config.sh
         echo -e "\n\n"
         echo -e "Thank you for choosing $(gum style --foreground 45 "Stelvio")!"
         echo -e "You can now deploy your app with $(gum style --foreground 45 "stlv deploy")"
-        exit 0
+        return 0 2>/dev/null || exit 0
     else
         echo -e "\n\n"
         echo -e "$(gum style --foreground 196 "Setup incomplete.") Please rerun the setup script to complete the configuration."
-        exit 1
+        return 1 2>/dev/null || exit 1
     fi
 }
 main
