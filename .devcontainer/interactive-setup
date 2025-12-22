@@ -104,10 +104,10 @@ check_stlv_app() {
 }
 
 prompt_aws() {
+        # New way:
         aws login --remote
 
-
-
+        # Old way:
         # export AWS_ACCESS_KEY_ID=$(aws configure get aws_access_key_id)
         # export AWS_SECRET_ACCESS_KEY=$(aws configure get aws_secret_access_key)
         # echo -e "\nPlease provide your AWS credentials to configure the AWS CLI.\n"
