@@ -2,15 +2,11 @@
 	"name": "Stelvio.dev Demo",
 	"build": {
 		"dockerfile": "./Dockerfile",
-		"context": ".."
-		// "cacheFrom": "type=registry,ref=ghcr.io/stelviodev/stelviodemocontainer:latest"
+		"context": "..",
+		"cacheFrom": "type=registry,ref=ghcr.io/stelviodev/stelviodemocontainer:latest"
 	},
 	"features": {
-		// these features are included in the stelviodevcontainer base image:
-		// re-enable them if switching to a different (smaller) base image
 		"ghcr.io/devcontainers/features/aws-cli:1": {},
-		// "ghcr.io/devcontainers/features/github-cli:1": {},
-		// "ghcr.io/devcontainer-community/devcontainer-features/astral.sh-uv:1": { "version": "0.9.7", "shellautocompletion": "true" },
 		// gum is needed for the interactive-setup script
 		"ghcr.io/devcontainer-community/devcontainer-features/charmbracelet-gum:1": { "version": "0.17.0" }
 	},
@@ -31,7 +27,6 @@
 			}
 		}
 	},
-	// "postCreateCommand": ".devcontainer/setup",
     "postAttachCommand": "/bin/bash -c 'source .devcontainer/interactive-setup && exec bash'",
 	"containerEnv": {
 		"UV_LINK_MODE": "copy",
