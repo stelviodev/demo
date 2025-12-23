@@ -6,21 +6,26 @@
 		"cacheFrom": "type=registry,ref=ghcr.io/stelviodev/stelviodemocontainer:latest"
 	},
 	"features": {
-		// these features are included in the stelviodevcontainer base image:
-		// re-enable them if switching to a different (smaller) base image
 		// "ghcr.io/devcontainers/features/aws-cli:1": {},
-		// "ghcr.io/devcontainers/features/github-cli:1": {},
-		// "ghcr.io/devcontainer-community/devcontainer-features/astral.sh-uv:1": { "version": "0.9.7", "shellautocompletion": "true" },
+		// using devcontainer-community aws-cli extension to disable
+		// VSCode extension installation
+		"ghcr.io/devcontainer-community/devcontainer-features/aws-cli": {},
 		// gum is needed for the interactive-setup script
 		"ghcr.io/devcontainer-community/devcontainer-features/charmbracelet-gum:1": { "version": "0.17.0" }
 	},
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"ms-python.python"
+				"ms-python.python",
+				"ms-python.vscode-pylance"
 			],
 			"settings": {
+				"python.languageServer": "Pylance",
+				"python.analysis.typeCheckingMode": "basic",
 				"terminal.integrated.automationProfile.linux": null,
+				// Prevent VS Code from auto-activating the Python environment,
+				// as this is handled in the interactive-setup script
+				"python.terminal.activateEnvironment": false,
 				// Force a dark theme when Codespaces / the container opens
 				"workbench.colorTheme": "Default Dark+",
 				// Disable auto-detection so the chosen theme stays dark
@@ -28,13 +33,14 @@
 			}
 		}
 	},
-	// "postCreateCommand": ".devcontainer/setup",
-    "postAttachCommand": ".devcontainer/interactive-setup",
+    "postAttachCommand": "/bin/bash -c 'source .devcontainer/interactive-setup && exec bash'",
 	"containerEnv": {
 		"UV_LINK_MODE": "copy",
 		"UV_VENV_CLEAR": "0"
 	},
 	"remoteEnv": {
-		"STLV_DEBUG": "0"
+		"STLV_DEBUG": "0",
+		"PYTHONDONTWRITEBYTECODE": "1",
+		"PULUMI_SKIP_UPDATE_CHECK": "true"
 	}
 }
