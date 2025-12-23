@@ -15,4 +15,5 @@ if command -v aws >/dev/null 2>&1; then
         export AWS_SECRET_ACCESS_KEY=$(echo "$_aws_creds" | jq -r '.SecretAccessKey')
         export AWS_SESSION_TOKEN=$(echo "$_aws_creds" | jq -r '.SessionToken')
     fi
+    unset $_aws_creds
 fi

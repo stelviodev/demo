@@ -38,6 +38,8 @@
 		"UV_VENV_CLEAR": "0"
 	},
 	"remoteEnv": {
-		"STLV_DEBUG": "0"
+		"STLV_DEBUG": "0",
+		"PYTHONDONTWRITEBYTECODE": "1",
+		"PULUMI_SKIP_UPDATE_CHECK": "true"
 	}
 }

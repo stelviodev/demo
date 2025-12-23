@@ -105,6 +105,8 @@ check_stlv_app() {
 
 prompt_aws() {
         # New way:
+        unset AWS_SECRET_ACCESS_KEY
+        unset AWS_ACCESS_KEY_ID
         aws login --remote
 
         # Old way:
