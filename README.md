@@ -1,5 +1,7 @@
 # Stelvio
 
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/lMhYRoh5BOs?si=MNA2LQy2RDhJW2tT&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 ## AWS for Python devs - made simple
 
 [**Documentation**](https://stelvio.dev/docs/getting-started/quickstart/) - [**Stelvio Manifesto**](https://stelvio.dev/manifesto/) - [**Intro article with quickstart**](https://stelvio.dev/blog/introducing-stelvio/)
