@@ -34,7 +34,7 @@
 			}
 		}
 	},
-    "postAttachCommand": "/bin/bash -c 'source .devcontainer/interactive-setup && exec bash'",
+    // "postAttachCommand": "/bin/bash -c 'source .devcontainer/interactive-setup && exec bash'",
 	"containerEnv": {
 		"UV_LINK_MODE": "copy",
 		"UV_VENV_CLEAR": "0"
