@@ -20,6 +20,7 @@
 				"ms-python.vscode-pylance"
 			],
 			"settings": {
+				"python.defaultInterpreterPath": "/workspaces/demo/stlv-demo/.venv/bin/python",
 				"python.languageServer": "Pylance",
 				"python.analysis.typeCheckingMode": "basic",
 				"terminal.integrated.automationProfile.linux": null,
