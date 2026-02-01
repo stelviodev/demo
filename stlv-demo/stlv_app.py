@@ -1,9 +1,11 @@
 from stelvio.app import StelvioApp
 from stelvio.config import StelvioAppConfig, AwsConfig
 
+
 from stelvio.aws.api_gateway import Api
 from stelvio.aws.dynamo_db import DynamoTable
 from stelvio.aws.cron import Cron
+
 
 app = StelvioApp("stlv-demo")
 
@@ -21,24 +23,21 @@ def configuration(env: str) -> StelvioAppConfig:
 @app.run
 def run() -> None:
     todos = DynamoTable(
-        name="todos-table",
-        fields={
-            "user": "string",
-            "date": "string",
-        },
-        partition_key="user",
+        "todos-table",
+        fields={"user": "string", "date": "string"},
         sort_key="date",
+        partition_key="user",
     )
 
+    # Disabled to avoid incurring costs when forgot to destroy
     # cleanup = Cron(
     #     "cleanup-cron",
     #     "rate(1 minute)",
     #     handler="api/handlers.cleanup",
-    #     links=[todos],
+    #     links=[todos]
     # )
 
     api = Api("stlv-demo-api")
     api.route("GET", "/hello", handler="api/handlers.hello_world")
     api.route("POST", "/todos", handler="api/handlers.post_todo", links=[todos])
-    api.route("GET", "/todos/{user}", handler="api/handlers.get_todos", links=[todos])
-    api.route("GET", "/cleanup", handler="api/handlers.cleanup", links=[todos])
+    api.route("GET", "/todos/{user}", handler="api/handlers.list_todos", links=[todos])

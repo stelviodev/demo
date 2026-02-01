@@ -478,7 +478,7 @@ wheels = [
 [[package]]
 name = "stelvio"
 version = "0.7.0b1"
-source = { git = "https://github.com/stelviodev/stelvio?rev=main#dd009821558fb60a68482cea671854432e10254f" }
+source = { git = "https://github.com/stelviodev/stelvio?rev=main#abfc34982571b60958172774ad3b8293056dfd9c" }
 dependencies = [
     { name = "appdirs" },
     { name = "awslambdaric" },

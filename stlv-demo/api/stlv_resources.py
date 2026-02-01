@@ -8,11 +8,11 @@ from functools import cached_property
 class TodosTableResource:
     @cached_property
     def table_arn(self) -> str:
-        return os.getenv("STLV_TODOS_TABLE_TABLE_ARN")
+        return os.environ["STLV_TODOS_TABLE_TABLE_ARN"]
 
     @cached_property
     def table_name(self) -> str:
-        return os.getenv("STLV_TODOS_TABLE_TABLE_NAME")
+        return os.environ["STLV_TODOS_TABLE_TABLE_NAME"]
 
 
 @dataclass(frozen=True)

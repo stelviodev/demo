@@ -34,6 +34,7 @@
 			}
 		}
 	},
+	// disabled for now as we have example directly in repo.
     // "postAttachCommand": "/bin/bash -c 'source .devcontainer/interactive-setup && exec bash'",
 	"containerEnv": {
 		"UV_LINK_MODE": "copy",
