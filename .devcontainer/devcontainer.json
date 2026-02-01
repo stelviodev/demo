@@ -20,6 +20,7 @@
 				"ms-python.vscode-pylance"
 			],
 			"settings": {
+				"python.defaultInterpreterPath": "/workspaces/demo/stlv-demo/.venv/bin/python",
 				"python.languageServer": "Pylance",
 				"python.analysis.typeCheckingMode": "basic",
 				"terminal.integrated.automationProfile.linux": null,
@@ -33,7 +34,8 @@
 			}
 		}
 	},
-    "postAttachCommand": "/bin/bash -c 'source .devcontainer/interactive-setup && exec bash'",
+	// disabled for now as we have example directly in repo.
+    // "postAttachCommand": "/bin/bash -c 'source .devcontainer/interactive-setup && exec bash'",
 	"containerEnv": {
 		"UV_LINK_MODE": "copy",
 		"UV_VENV_CLEAR": "0"
